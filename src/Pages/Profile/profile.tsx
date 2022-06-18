@@ -75,7 +75,6 @@ class Contents extends React.Component {
         id="content-viewer"
         className="pl-2 text-slate-100 font-light text-sm justify-self-end mt-auto mb-0 ml-auto mr-auto"
       >
-        <p>v1.0</p>
       </div>
     );
   }
@@ -86,7 +85,7 @@ export default class Profile extends React.Component {
     return (
       <div
         id="profile-component"
-        className="h-full w-1/6 text-white flex flex-col left-0 top-0 bottom-0 fixed bg-black"
+        className="h-full w-1/6 text-white hidden flex-col left-0 top-0 bottom-0 fixed bg-slate-900 md:flex"
       >
         <ProfileViewer />
         <Options />

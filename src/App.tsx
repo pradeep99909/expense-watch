@@ -21,8 +21,8 @@ class Home extends React.Component {
   render() {
     return (
       <div
-        className="w-5/6 flex p-10 absolute top-0 bg-black"
-        style={{ left: "16.666667%" }}
+        className="w-full md:w-5/6 flex p-10 absolute top-0 bg-black"
+        style={{left:"16.666667%"}}
       >
         <Routes>
           <Route path="/expense" element={<Expense />} />
