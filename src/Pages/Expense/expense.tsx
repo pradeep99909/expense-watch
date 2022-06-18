@@ -163,7 +163,7 @@ class StackedBArChart extends React.Component<{}, { name: string; data: any }> {
 
   render() {
     return (
-      <div className="w-1/2 text-slate-50">
+      <div className="w-full md:w-1/2 text-slate-50">
         <canvas ref={this.chartReference} />
       </div>
     );
@@ -244,7 +244,7 @@ class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
 
   render() {
     return (
-      <div className="w-1/2 text-slate-50">
+      <div className="w-full md:w-1/2 text-slate-50">
         <canvas ref={this.chartReference} />
       </div>
     );
@@ -419,7 +419,7 @@ class ExpenseCalender extends React.Component {
 
 function BarChart() {
   return (
-    <div className="flex mt-10">
+    <div className="flex flex-col md:flex-row mt-10">
       <StackedBArChart />
       <StackedBArChart />
     </div>
@@ -428,7 +428,7 @@ function BarChart() {
 
 function DoughPieChart() {
   return (
-    <div className="flex mt-10">
+    <div className="flex flex-col md:flex-row mt-10">
       <DoughNutChart />
       <DoughNutChart />
     </div>
