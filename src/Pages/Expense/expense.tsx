@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartPie,
@@ -10,6 +10,7 @@ import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import listPlugin from "@fullcalendar/list";
 import colors from "tailwindcss/colors";
+import { AppContext } from "../../Context/provider"
 Chart.register(...registerables);
 
 class UserExpenseBanner extends React.Component {
@@ -93,7 +94,6 @@ class StackedBArChart extends React.Component<{}, { name: string; data: any }> {
 
     setTimeout(() => {
       const chart: any = this.chartReference.current.getContext("2d");
-      console.log(this.chartReference.current.getContext("2d"));
 
       const data = {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "June"],
@@ -178,7 +178,6 @@ class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
 
     setTimeout(() => {
       const chart: any = this.chartReference.current.getContext("2d");
-      console.log(this.chartReference.current.getContext("2d"));
 
       const data = {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "June"],
@@ -251,152 +250,20 @@ class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
   }
 }
 
-class ExpenseTable extends React.Component {
-  render() {
-    return (
-      <div className="mt-4 -mb-3 w-1/2 p-4">
-        <div className="not-prose relative bg-slate-900 rounded-xl overflow-hidden dark:bg-slate-800/25">
-          <div
-            style={{ backgroundPosition: "10px 10px" }}
-            className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/25 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]"
-          ></div>
-          <div className="relative rounded-xl overflow-auto">
-            <div className="shadow-sm overflow-hidden my-8">
-              <table className="border-collapse table-auto w-full text-sm">
-                <thead>
-                  <tr>
-                    <th className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-100 dark:text-slate-200 text-left">
-                      Song
-                    </th>
-                    <th className="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-100 dark:text-slate-200 text-left">
-                      Year
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-slate-900 dark:bg-slate-800">
-                  <tr>
-                    <td className="dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                      1961
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className=" dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                      Witchy Woman
-                    </td>
-                    <td className="dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                      1972
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="dark:border-slate-600 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                      Shining Star
-                    </td>
-                    <td className="dark:border-slate-600 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                      1975
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                      1961
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className=" dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                      Witchy Woman
-                    </td>
-                    <td className="dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                      1972
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="dark:border-slate-600 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                      Shining Star
-                    </td>
-                    <td className="dark:border-slate-600 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                      1975
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                      1961
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className=" dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                      Witchy Woman
-                    </td>
-                    <td className="dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                      1972
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="dark:border-slate-600 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                      Shining Star
-                    </td>
-                    <td className="dark:border-slate-600 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                      1975
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                      The Sliding Mr. Bones (Next Stop, Pottersville)
-                    </td>
-                    <td className="dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                      1961
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className=" dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                      Witchy Woman
-                    </td>
-                    <td className="dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                      1972
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="dark:border-slate-600 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                      Shining Star
-                    </td>
-                    <td className="dark:border-slate-600 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                      1975
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div className="absolute inset-0 pointer-events-none border border-black/5 rounded-xl dark:border-white/5"></div>
+function ExpenseCalenderList() {
+    const { expenseDialog, expenseList } = useContext(AppContext);
+    const [ expenses, setExpenses ] = expenseList;
+    //render(){
+      return (
+        <div className="mt-4 mb-3 w-1/2 pr-2">
+          <FullCalendar
+            events={expenses}
+            plugins={[listPlugin]}
+            initialView="listMonth"
+          />
         </div>
-      </div>
-    );
-  }
-}
-
-class ExpenseCalenderList extends React.Component {
-  render() {
-    return (
-      <div className="mt-4 mb-3 w-1/2 pr-2">
-        <FullCalendar
-          events={[
-            { title: "event 1", date: "2022-06-06" },
-            { title: "event 2", date: "2022-06-07" },
-            { title: "event 3", date: "2022-06-07" },
-          ]}
-          plugins={[listPlugin]}
-          initialView="listMonth"
-        />
-      </div>
-    );
-  }
+      );
+    //}
 }
 
 class ExpenseCalender extends React.Component {
@@ -449,14 +316,148 @@ function ExpenseTableandCalender() {
   );
 }
 
-class FloatActionButton extends React.Component {
-  render() {
-    return (
-      <div className="w-16 h-16 rounded-full bg-blue-700 flex justify-center items-center shadow-lg shadow-blue-500/50 fixed bottom-10 right-10 cursor-pointer">
-        <FontAwesomeIcon icon={faAdd} color="white" className="" size="1x" />
+function Model() {
+  const { expenseDialog, expenseList } = useContext(AppContext);
+  const [ expenses, setExpenses ] = expenseList;
+  const [ displayExpenseDialog, setdisplayExpenseDialog ] = expenseDialog;
+  const [ name, setName ] = useState("");
+  const [ category, setCategory ] = useState("");
+  const [ amount, setAmount ] = useState(0);
+  const [ dateTime, setDateTime ] = useState("")
+  return (
+    <div
+      id="authentication-modal"
+      className={
+        displayExpenseDialog +
+        "overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full flex justify-center items-center bg-black/80 shadow"
+      }
+    >
+      <div className="relative p-4 w-full max-w-md h-full md:h-auto">
+            <div className="relative bg-black rounded-lg shadow dark:bg-gray-700">
+              <button
+                type="button"
+                className="absolute top-3 right-2.5 text-white bg-transparent hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                onClick={() => setdisplayExpenseDialog("hidden ")}  
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+              <div className="py-6 px-6 lg:px-8">
+                <h3 className="mb-4 text-xl font-medium text-gray-100 dark:text-white">
+                  Add Expense
+                </h3>
+                <form className="space-y-6" action="#">
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-300">
+                      Expense
+                    </label>
+                    <input
+                      maxLength={20}
+                      type="text"
+                      name="name"
+                      id="name"
+                      className="bg-black border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      placeholder="eg: Credit Card"
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-300">
+                      Categories
+                    </label>
+                    <select
+                      className="text-sm font-medium"
+                      onChange={(e) => {
+                        setCategory(e.target.value);
+                      }}
+                      required
+                    >
+                      <option className="w-10 py-2">Loan</option>
+                      <option className="w-10 py-2">Credit Card</option>
+                      <option className="w-10 py-2">Subscribtion</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-300">
+                      Amount
+                    </label>
+                    <input
+                      type="number"
+                      name="amount"
+                      id="password"
+                      placeholder="eg: 700"
+                      className="bg-black border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      onChange={(e) => {
+                        setAmount(parseInt(e.target.value));
+                      }}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-300">
+                      Amount
+                    </label>
+                    <input
+                      type="datetime-local"
+                      name="date"
+                      id="password"
+                      placeholder="eg: 700"
+                      className="bg-black border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      onChange={(e) => {
+                        setDateTime(e.target.value);
+                      }}
+                      required
+                    />
+                  </div>
+                  <button
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(90deg, rgba(30,58,138,1) 0%, rgba(30,64,175,1) 10%, rgba(29,78,216,1) 100%, rgba(37,99,235,1) 100%)",
+                    }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const expense = [...expenses, { title: name, date: dateTime }];
+                      setExpenses(expense);
+                      setName("");
+                      setAmount(0);
+                      setCategory("");
+                     setdisplayExpenseDialog("hidden ");
+                      
+                    }}
+                    type="submit"
+                    className="w-full text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    Add
+                  </button>
+                </form>
+              </div>
+            </div>
       </div>
-    );
-  }
+    </div>
+  )
+}
+
+function FloatActionButton() {
+  const { expenseDialog } = useContext(AppContext);
+  const [ displayExpenseDialog, setdisplayExpenseDialog ] = expenseDialog;
+  return (
+    <div onClick={() => setdisplayExpenseDialog(displayExpenseDialog === "hidden " ? "" :"hidden ")} className="w-16 h-16 rounded-full bg-blue-700 flex justify-center items-center shadow-lg shadow-blue-500/50 fixed bottom-10 right-10 cursor-pointer">
+      <FontAwesomeIcon icon={faAdd} color="white" className="" size="1x" />
+    </div>
+  );
 }
 
 export default class Expense extends React.Component {
@@ -467,6 +468,7 @@ export default class Expense extends React.Component {
         <ExpenseTableandCalender />
         <BarChart />
         <DoughPieChart />
+        <Model />
         <FloatActionButton />
       </div>
     );
