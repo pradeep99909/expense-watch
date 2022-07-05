@@ -266,22 +266,18 @@ function ExpenseCalenderList() {
     //}
 }
 
-class ExpenseCalender extends React.Component {
-  render() {
-    return (
+function ExpenseCalender(){
+  const { expenseDialog, expenseList } = useContext(AppContext);
+  const [ expenses, setExpenses ] = expenseList;
+  return (
       <div className="mt-4 -mb-3 w-1/2 pl-2">
         <FullCalendar
-          events={[
-            { title: "event 1", date: "2022-06-06" },
-            { title: "event 2", date: "2022-06-07" },
-            { title: "event 3", date: "2022-06-07" },
-          ]}
+          events={expenses}
           plugins={[dayGridPlugin]}
           initialView="dayGridMonth"
         />
       </div>
     );
-  }
 }
 
 function BarChart() {
@@ -329,11 +325,11 @@ function Model() {
       id="authentication-modal"
       className={
         displayExpenseDialog +
-        "overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full flex justify-center items-center bg-black/80 shadow"
+        "overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full flex justify-center items-center bg-gray-800/95 shadow"
       }
     >
       <div className="relative p-4 w-full max-w-md h-full md:h-auto">
-            <div className="relative bg-black rounded-lg shadow dark:bg-gray-700">
+            <div className="relative bg-gray-900 rounded-lg shadow">
               <button
                 type="button"
                 className="absolute top-3 right-2.5 text-white bg-transparent hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
@@ -366,7 +362,7 @@ function Model() {
                       type="text"
                       name="name"
                       id="name"
-                      className="bg-black border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      className="bg-gray-900 border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       placeholder="eg: Credit Card"
                       onChange={(e) => {
                         setName(e.target.value);
@@ -379,7 +375,7 @@ function Model() {
                       Categories
                     </label>
                     <select
-                      className="text-sm font-medium"
+                      className="text-sm font-medium bg-gray-900 w-30 py-4 br-4 text-white shadow"
                       onChange={(e) => {
                         setCategory(e.target.value);
                       }}
@@ -398,8 +394,9 @@ function Model() {
                       type="number"
                       name="amount"
                       id="password"
+                      defaultValue={0}
                       placeholder="eg: 700"
-                      className="bg-black border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      className="bg-gray-900 border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       onChange={(e) => {
                         setAmount(parseInt(e.target.value));
                       }}
@@ -408,14 +405,15 @@ function Model() {
                   </div>
                   <div>
                     <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-300">
-                      Amount
+                      Date & Time
                     </label>
                     <input
                       type="datetime-local"
                       name="date"
-                      id="password"
+                      id="date"
+                      defaultValue={new Date().toISOString()}
                       placeholder="eg: 700"
-                      className="bg-black border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      className="bg-gray-900 border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       onChange={(e) => {
                         setDateTime(e.target.value);
                       }}
