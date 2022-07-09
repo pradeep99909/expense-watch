@@ -79,18 +79,6 @@ class StackedBArChart extends React.Component<{}, { name: string; data: any }> {
   constructor(props: any) {
     super(props);
     this.chartReference = React.createRef();
-    this.state = {
-      name: "React",
-      data: {
-        labels: ["Red", "Green", "Blue"],
-        datasets: [
-          {
-            data: [5, 7, 6],
-            backgroundColor: ["red", "green", "blue"],
-          },
-        ],
-      },
-    };
 
     setTimeout(() => {
       const chart: any = this.chartReference.current.getContext("2d");
@@ -171,74 +159,125 @@ class StackedBArChart extends React.Component<{}, { name: string; data: any }> {
 }
 
 class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
+  static contextType = AppContext;
   chartReference: any;
+  private chart:any;
+  private doughNutChart: any;
   constructor(props: any) {
     super(props);
     this.chartReference = React.createRef();
 
-    setTimeout(() => {
-      const chart: any = this.chartReference.current.getContext("2d");
+    setTimeout(this.setChart, 1000)
+    setTimeout(this.loadChart, 2000);
+  }
 
-      const data = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "June"],
-        datasets: [
-          {
-            label: "Dataset 1",
-            data: [1, 2, 3, 4, 5, 6],
+  setChart = () => {
+    
+  }
+
+  loadChart = () => {
+    this.chart = this.chartReference.current.getContext("2d");
+    console.log("loadChart :: this.context, AppContext",this.context, AppContext)
+    const context:any = this.context;
+    const [ expenses ] = context.expenseList;
+    console.log("expenses ::",expenses)
+    let labels:String[] = [];
+    let amounts:number[] = [];
+    for (let i = 0; i < expenses.length; i++){
+       if(!labels.includes(expenses[i].category)){
+         labels.push(expenses[i].category)
+         amounts.push(expenses[i].amount)
+       }
+       else{
+        const index = labels.indexOf(expenses[i].category);
+        amounts[index] += expenses[i].amount
+       }
+    }
+    console.log("DoughNutChart :: setTimeout :: labels ::",labels)
+    console.log("DoughNutChart :: setTimeout :: amounts ::",amounts)
+    const data = {
+      labels: labels,
+      datasets: [
+        {
+          label: "Dataset 1",
+          data: amounts,
+          color: "white",
+          backgroundColor: [
+            colors.blue[900],
+            colors.blue[800],
+            colors.blue[700],
+            colors.blue[600],
+            colors.blue[500],
+            colors.blue[400],
+          ],
+          borderWidth: 0,
+        },
+      ],
+    };
+
+    const options = {
+      plugins: {
+        legend: {
+          labels: {
             color: "white",
-            backgroundColor: [
-              colors.blue[900],
-              colors.blue[800],
-              colors.blue[700],
-              colors.blue[600],
-              colors.blue[500],
-              colors.blue[400],
-            ],
-            borderWidth: 0,
-          },
-        ],
-      };
-
-      const options = {
-        plugins: {
-          legend: {
-            labels: {
-              color: "white",
-              font: {
-                size: 14,
-              },
+            font: {
+              size: 14,
             },
           },
-          title: {
-            display: true,
-            text: "Chart.js Bar Chart - Stacked",
+        },
+        title: {
+          display: true,
+          text: "Chart.js Bar Chart - Stacked",
+          color: "white",
+        },
+      },
+      responsive: true,
+      scales: {
+        x: {
+          stacked: true,
+          ticks: {
             color: "white",
           },
         },
-        responsive: true,
-        scales: {
-          x: {
-            stacked: true,
-            ticks: {
-              color: "white",
-            },
-          },
-          y: {
-            stacked: true,
-            ticks: {
-              color: "white",
-            },
+        y: {
+          stacked: true,
+          ticks: {
+            color: "white",
           },
         },
-      };
+      },
+    };
 
-      new Chart(chart, {
-        type: "doughnut",
-        data: data,
-        options: options,
-      });
-      //chart.update();
-    }, 2000);
+    this.doughNutChart = new Chart(this.chart, {
+      type: "doughnut",
+      data: data,
+      options: options,
+    });
+    //chart.update();
+  }
+
+  componentDidUpdate(){
+    const context:any = this.context;
+    const [ expenses ] = context.expenseList;
+    console.log("expenses ::",expenses)
+    let labels:String[] = [];
+    let amounts:number[] = [];
+    for (let i = 0; i < expenses.length; i++){
+       if(!labels.includes(expenses[i].category)){
+         labels.push(expenses[i].category)
+         amounts.push(expenses[i].amount)
+       }
+       else{
+        const index = labels.indexOf(expenses[i].category);
+        amounts[index] += expenses[i].amount
+       }
+    }
+    console.log("componentDidUpdate :: labels ::",labels)
+    console.log("componentDidUpdate :: amounts ::",amounts)
+    this.doughNutChart.data.labels = labels;
+    this.doughNutChart.data.datasets[0].data = amounts;
+
+    this.doughNutChart.update()
   }
 
   render() {
@@ -427,7 +466,7 @@ function Model() {
                     }}
                     onClick={(e) => {
                       e.preventDefault();
-                      const expense = [...expenses, { title: name, date: dateTime }];
+                      const expense = [...expenses, { title: name, date: dateTime, amount: amount, category: category }];
                       setExpenses(expense);
                       setName("");
                       setAmount(0);
