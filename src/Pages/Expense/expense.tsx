@@ -166,21 +166,13 @@ class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
   constructor(props: any) {
     super(props);
     this.chartReference = React.createRef();
-
-    setTimeout(this.setChart, 1000)
     setTimeout(this.loadChart, 2000);
-  }
-
-  setChart = () => {
-    
   }
 
   loadChart = () => {
     this.chart = this.chartReference.current.getContext("2d");
-    console.log("loadChart :: this.context, AppContext",this.context, AppContext)
     const context:any = this.context;
     const [ expenses ] = context.expenseList;
-    console.log("expenses ::",expenses)
     let labels:String[] = [];
     let amounts:number[] = [];
     for (let i = 0; i < expenses.length; i++){
@@ -193,8 +185,6 @@ class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
         amounts[index] += expenses[i].amount
        }
     }
-    console.log("DoughNutChart :: setTimeout :: labels ::",labels)
-    console.log("DoughNutChart :: setTimeout :: amounts ::",amounts)
     const data = {
       labels: labels,
       datasets: [
@@ -259,7 +249,6 @@ class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
   componentDidUpdate(){
     const context:any = this.context;
     const [ expenses ] = context.expenseList;
-    console.log("expenses ::",expenses)
     let labels:String[] = [];
     let amounts:number[] = [];
     for (let i = 0; i < expenses.length; i++){
@@ -272,8 +261,6 @@ class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
         amounts[index] += expenses[i].amount
        }
     }
-    console.log("componentDidUpdate :: labels ::",labels)
-    console.log("componentDidUpdate :: amounts ::",amounts)
     this.doughNutChart.data.labels = labels;
     this.doughNutChart.data.datasets[0].data = amounts;
 
