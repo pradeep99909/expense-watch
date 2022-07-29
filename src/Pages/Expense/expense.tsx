@@ -110,68 +110,6 @@ class StackedBArChart extends React.Component<{}, { name: string; data: any }> {
     this.chart = this.chartReference.current.getContext("2d");
     const context: any = this.context;
     const [expenses] = context.expenseList;
-    // const expenses = [
-    //   {
-    //     amount: 100,
-    //     category: "Credit Card",
-    //     date: "2022-07-14T21:51",
-    //     title: "AsASdas"
-    //   },
-    //   {
-    //     amount: 12,
-    //     category: "Credit Card1",
-    //     date: "2022-07-14T21:51",
-    //     title: "AsASdas"
-    //   },
-    //   {
-    //     amount: 12,
-    //     category: "Credit Card1",
-    //     date: "2022-07-14T21:51",
-    //     title: "AsASdas"
-    //   },
-    //   {
-    //     amount: 32,
-    //     category: "Credit Card2",
-    //     date: "2022-07-14T21:51",
-    //     title: "AsASdas"
-    //   },
-    //   {
-    //     amount: 23,
-    //     category: "Credit Card3",
-    //     date: "2022-07-14T21:51",
-    //     title: "AsASdas"
-    //   },
-    //   {
-    //     amount: 16,
-    //     category: "Credit Card",
-    //     date: "2022-07-14T21:51",
-    //     title: "AsASdas"
-    //   },
-    //   {
-    //     amount: 17,
-    //     category: "Credit Card",
-    //     date: "2022-07-14T21:51",
-    //     title: "AsASdas"
-    //   },
-    //   {
-    //     amount: 26,
-    //     category: "Credit Card4",
-    //     date: "2022-07-14T21:51",
-    //     title: "AsASdas"
-    //   },
-    //   {
-    //     amount: 32,
-    //     category: "Credit Card5",
-    //     date: "2022-07-14T21:51",
-    //     title: "AsASdas"
-    //   },
-    //   {
-    //     amount: 21,
-    //     category: "Credit Card5",
-    //     date: "2022-07-14T21:51",
-    //     title: "AsASdas"
-    //   },
-    // ]
     let category: String[] = [];
     let amounts: number[] = [];
     let datasets = [];
@@ -240,7 +178,7 @@ class StackedBArChart extends React.Component<{}, { name: string; data: any }> {
     });
   }
 
-  componentDidUpdate() {
+  updateChart = () => {
     const colorsDataset = [colors.blue[900], colors.blue[700], colors.blue[500], colors.blue[300], colors.blue[100], colors.green[900], colors.green[700], colors.green[500], colors.green[300], colors.green[100]]
     const date = new Date();
     const month = date.getMonth() + 1;
@@ -250,8 +188,6 @@ class StackedBArChart extends React.Component<{}, { name: string; data: any }> {
     const context: any = this.context;
     const [expenses] = context.expenseList;
     console.log("componentDidUpdate :: expenses ::", expenses)
-    let category: String[] = [];
-    let amounts: number[] = [];
     let datasets = [];
     let colorCount = 0;
     for (let i = 0; i < expenses.length; i++) {
@@ -277,6 +213,10 @@ class StackedBArChart extends React.Component<{}, { name: string; data: any }> {
     }
     this.stackedBArChart.data.datasets = datasets;
     this.stackedBArChart.update();
+  }
+
+  componentDidUpdate() {
+    this.updateChart();
   }
 
   render() {
@@ -376,7 +316,7 @@ class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
     //chart.update();
   }
 
-  componentDidUpdate() {
+  updateChart = () => {
     const context: any = this.context;
     const [expenses] = context.expenseList;
     let labels: String[] = [];
@@ -395,6 +335,10 @@ class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
     this.doughNutChart.data.datasets[0].data = amounts;
 
     this.doughNutChart.update()
+  }
+
+  componentDidUpdate() {
+    this.updateChart()
   }
 
   render() {
