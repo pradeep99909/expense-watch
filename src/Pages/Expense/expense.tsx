@@ -13,6 +13,22 @@ import colors from "tailwindcss/colors";
 import { AppContext } from "../../Context/provider"
 Chart.register(...registerables);
 
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+const date_to_month: any = {
+  '01': "Jan",
+  '02': "Feb",
+  '03': "Mar",
+  '04': "Apr",
+  '05': "May",
+  '06': "June",
+  '07': "July",
+  '08': "Aug",
+  '09': "Sept",
+  '10': "Oct",
+  '11': "Nov",
+  '12': "Dec",
+}
+
 class UserExpenseBanner extends React.Component {
   constructor(props: any) {
     super(props);
@@ -75,78 +91,192 @@ class UserExpenseBanner extends React.Component {
 }
 
 class StackedBArChart extends React.Component<{}, { name: string; data: any }> {
+  static contextType = AppContext;
   chartReference: any;
+  private chart: any;
+  private stackedBArChart: any;
   constructor(props: any) {
     super(props);
     this.chartReference = React.createRef();
 
-    setTimeout(() => {
-      const chart: any = this.chartReference.current.getContext("2d");
+    setTimeout(this.loadChart, 2000);
+  }
 
-      const data = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "June"],
-        datasets: [
-          {
-            label: "Dataset 1",
-            data: [1, 2, 3, 4, 5, 6],
-            backgroundColor: colors.blue[900],
-            color: "white",
-          },
-          {
-            label: "Dataset 2",
-            data: [1, 2, 3, 4, 5, 6],
-            backgroundColor: colors.blue[700],
-            color: "white",
-          },
-          {
-            label: "Dataset 3",
-            data: [1, 2, 3, 4, 5, 6],
-            backgroundColor: colors.blue[500],
-            color: "white",
-          },
-        ],
-      };
+  loadChart = () => {
+    const colorsDataset = [colors.blue[900], colors.blue[700], colors.blue[500], colors.blue[300], colors.blue[100], colors.green[900], colors.green[700], colors.green[500], colors.green[300], colors.green[100]]
+    const date = new Date();
+    const month = date.getMonth() + 1;
+    let labels = [...months.slice(month - 6, month), ...months.slice(months.length - (6 - month), months.length)]
+    this.chart = this.chartReference.current.getContext("2d");
+    const context: any = this.context;
+    const [expenses] = context.expenseList;
+    // const expenses = [
+    //   {
+    //     amount: 100,
+    //     category: "Credit Card",
+    //     date: "2022-07-14T21:51",
+    //     title: "AsASdas"
+    //   },
+    //   {
+    //     amount: 12,
+    //     category: "Credit Card1",
+    //     date: "2022-07-14T21:51",
+    //     title: "AsASdas"
+    //   },
+    //   {
+    //     amount: 12,
+    //     category: "Credit Card1",
+    //     date: "2022-07-14T21:51",
+    //     title: "AsASdas"
+    //   },
+    //   {
+    //     amount: 32,
+    //     category: "Credit Card2",
+    //     date: "2022-07-14T21:51",
+    //     title: "AsASdas"
+    //   },
+    //   {
+    //     amount: 23,
+    //     category: "Credit Card3",
+    //     date: "2022-07-14T21:51",
+    //     title: "AsASdas"
+    //   },
+    //   {
+    //     amount: 16,
+    //     category: "Credit Card",
+    //     date: "2022-07-14T21:51",
+    //     title: "AsASdas"
+    //   },
+    //   {
+    //     amount: 17,
+    //     category: "Credit Card",
+    //     date: "2022-07-14T21:51",
+    //     title: "AsASdas"
+    //   },
+    //   {
+    //     amount: 26,
+    //     category: "Credit Card4",
+    //     date: "2022-07-14T21:51",
+    //     title: "AsASdas"
+    //   },
+    //   {
+    //     amount: 32,
+    //     category: "Credit Card5",
+    //     date: "2022-07-14T21:51",
+    //     title: "AsASdas"
+    //   },
+    //   {
+    //     amount: 21,
+    //     category: "Credit Card5",
+    //     date: "2022-07-14T21:51",
+    //     title: "AsASdas"
+    //   },
+    // ]
+    let category: String[] = [];
+    let amounts: number[] = [];
+    let datasets = [];
+    let colorCount = 0;
+    for (let i = 0; i < expenses.length; i++) {
+      const monthindex = labels.indexOf(String(expenses[i].date).slice(4, 8).trim());
+      const datasetIndex = datasets.findIndex((dataset: any) => { return dataset.label === expenses[i].category })
+      if (monthindex >= 0 && datasetIndex >= 0) {
+        datasets[datasetIndex].data[monthindex] += expenses[i].amount;
+      }
+      else if (monthindex >= 0 && datasetIndex == -1) {
+        const data = [0, 0, 0, 0, 0, 0];
+        data[monthindex] = expenses[i].amount
+        datasets.push({
+          label: expenses[i].category,
+          data: data,
+          backgroundColor: colorsDataset[colorCount],
+          color: "white",
+        })
+        colorCount += 1;
+      }
+    }
+    console.log("datasets ::", datasets)
+    const data = {
+      labels: labels,
+      datasets: datasets
+    }
 
-      const options = {
-        plugins: {
-          legend: {
-            labels: {
-              color: "white",
-              font: {
-                size: 14,
-              },
+    const options = {
+      plugins: {
+        legend: {
+          labels: {
+            color: "white",
+            font: {
+              size: 14,
             },
           },
-          title: {
-            display: true,
-            text: "Chart.js Bar Chart - Stacked",
+        },
+        title: {
+          display: true,
+          text: "Chart.js Bar Chart - Stacked",
+          color: "white",
+        },
+      },
+      responsive: true,
+      scales: {
+        x: {
+          stacked: true,
+          ticks: {
             color: "white",
           },
         },
-        responsive: true,
-        scales: {
-          x: {
-            stacked: true,
-            ticks: {
-              color: "white",
-            },
-          },
-          y: {
-            stacked: true,
-            ticks: {
-              color: "white",
-            },
+        y: {
+          stacked: true,
+          ticks: {
+            color: "white",
           },
         },
-      };
+      },
+    };
 
-      new Chart(chart, {
-        type: "bar",
-        data: data,
-        options: options,
-      });
-      //chart.update();
-    }, 2000);
+    this.stackedBArChart = new Chart(this.chart, {
+      type: "bar",
+      data: data,
+      options: options,
+    });
+  }
+
+  componentDidUpdate() {
+    const colorsDataset = [colors.blue[900], colors.blue[700], colors.blue[500], colors.blue[300], colors.blue[100], colors.green[900], colors.green[700], colors.green[500], colors.green[300], colors.green[100]]
+    const date = new Date();
+    const month = date.getMonth() + 1;
+    let labels: any[] = [...months.slice(month - 6, month), ...months.slice(months.length - (6 - month), months.length)]
+    //const colorsDataset = [colors.blue[900],]
+    this.chart = this.chartReference.current.getContext("2d");
+    const context: any = this.context;
+    const [expenses] = context.expenseList;
+    console.log("componentDidUpdate :: expenses ::", expenses)
+    let category: String[] = [];
+    let amounts: number[] = [];
+    let datasets = [];
+    let colorCount = 0;
+    for (let i = 0; i < expenses.length; i++) {
+      const monthValue: any = String(expenses[i].date).slice(5, 7).trim()
+      const monthindex = labels.indexOf(date_to_month[monthValue]);
+      console.log("monthIndex ::", monthindex)
+      const datasetIndex = datasets.findIndex((dataset: any) => { return dataset.label === expenses[i].category })
+      console.log("datasetIndex ::", datasetIndex)
+      if (monthindex >= 0 && datasetIndex >= 0) {
+        datasets[datasetIndex].data[monthindex] += expenses[i].amount;
+      }
+      else if (monthindex >= 0 && datasetIndex == -1) {
+        const data = [0, 0, 0, 0, 0, 0];
+        data[monthindex] = expenses[i].amount
+        datasets.push({
+          label: expenses[i].category,
+          data: data,
+          backgroundColor: colorsDataset[colorCount],
+          color: "white",
+        })
+        colorCount += 1;
+      }
+    }
+    this.stackedBArChart.data.datasets = datasets;
+    this.stackedBArChart.update();
   }
 
   render() {
@@ -161,7 +291,7 @@ class StackedBArChart extends React.Component<{}, { name: string; data: any }> {
 class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
   static contextType = AppContext;
   chartReference: any;
-  private chart:any;
+  private chart: any;
   private doughNutChart: any;
   constructor(props: any) {
     super(props);
@@ -171,19 +301,19 @@ class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
 
   loadChart = () => {
     this.chart = this.chartReference.current.getContext("2d");
-    const context:any = this.context;
-    const [ expenses ] = context.expenseList;
-    let labels:String[] = [];
-    let amounts:number[] = [];
-    for (let i = 0; i < expenses.length; i++){
-       if(!labels.includes(expenses[i].category)){
-         labels.push(expenses[i].category)
-         amounts.push(expenses[i].amount)
-       }
-       else{
+    const context: any = this.context;
+    const [expenses] = context.expenseList;
+    let labels: String[] = [];
+    let amounts: number[] = [];
+    for (let i = 0; i < expenses.length; i++) {
+      if (!labels.includes(expenses[i].category)) {
+        labels.push(expenses[i].category)
+        amounts.push(expenses[i].amount)
+      }
+      else {
         const index = labels.indexOf(expenses[i].category);
         amounts[index] += expenses[i].amount
-       }
+      }
     }
     const data = {
       labels: labels,
@@ -246,20 +376,20 @@ class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
     //chart.update();
   }
 
-  componentDidUpdate(){
-    const context:any = this.context;
-    const [ expenses ] = context.expenseList;
-    let labels:String[] = [];
-    let amounts:number[] = [];
-    for (let i = 0; i < expenses.length; i++){
-       if(!labels.includes(expenses[i].category)){
-         labels.push(expenses[i].category)
-         amounts.push(expenses[i].amount)
-       }
-       else{
+  componentDidUpdate() {
+    const context: any = this.context;
+    const [expenses] = context.expenseList;
+    let labels: String[] = [];
+    let amounts: number[] = [];
+    for (let i = 0; i < expenses.length; i++) {
+      if (!labels.includes(expenses[i].category)) {
+        labels.push(expenses[i].category)
+        amounts.push(expenses[i].amount)
+      }
+      else {
         const index = labels.indexOf(expenses[i].category);
         amounts[index] += expenses[i].amount
-       }
+      }
     }
     this.doughNutChart.data.labels = labels;
     this.doughNutChart.data.datasets[0].data = amounts;
@@ -275,35 +405,34 @@ class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
     );
   }
 }
-
 function ExpenseCalenderList() {
-    const { expenseDialog, expenseList } = useContext(AppContext);
-    const [ expenses, setExpenses ] = expenseList;
-    //render(){
-      return (
-        <div className="mt-4 mb-3 w-1/2 pr-2">
-          <FullCalendar
-            events={expenses}
-            plugins={[listPlugin]}
-            initialView="listMonth"
-          />
-        </div>
-      );
-    //}
+  const { expenseDialog, expenseList } = useContext(AppContext);
+  const [expenses, setExpenses] = expenseList;
+  //render(){
+  return (
+    <div className="mt-4 mb-3 w-1/2 pr-2">
+      <FullCalendar
+        events={expenses}
+        plugins={[listPlugin]}
+        initialView="listMonth"
+      />
+    </div>
+  );
+  //}
 }
 
-function ExpenseCalender(){
+function ExpenseCalender() {
   const { expenseDialog, expenseList } = useContext(AppContext);
-  const [ expenses, setExpenses ] = expenseList;
+  const [expenses, setExpenses] = expenseList;
   return (
-      <div className="mt-4 -mb-3 w-1/2 pl-2">
-        <FullCalendar
-          events={expenses}
-          plugins={[dayGridPlugin]}
-          initialView="dayGridMonth"
-        />
-      </div>
-    );
+    <div className="mt-4 -mb-3 w-1/2 pl-2">
+      <FullCalendar
+        events={expenses}
+        plugins={[dayGridPlugin]}
+        initialView="dayGridMonth"
+      />
+    </div>
+  );
 }
 
 function BarChart() {
@@ -340,12 +469,12 @@ function ExpenseTableandCalender() {
 
 function Model() {
   const { expenseDialog, expenseList } = useContext(AppContext);
-  const [ expenses, setExpenses ] = expenseList;
-  const [ displayExpenseDialog, setdisplayExpenseDialog ] = expenseDialog;
-  const [ name, setName ] = useState("");
-  const [ category, setCategory ] = useState("");
-  const [ amount, setAmount ] = useState(0);
-  const [ dateTime, setDateTime ] = useState("")
+  const [expenses, setExpenses] = expenseList;
+  const [displayExpenseDialog, setdisplayExpenseDialog] = expenseDialog;
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [dateTime, setDateTime] = useState("")
   return (
     <div
       id="authentication-modal"
@@ -355,120 +484,120 @@ function Model() {
       }
     >
       <div className="relative p-4 w-full max-w-md h-full md:h-auto">
-            <div className="relative bg-gray-900 rounded-lg shadow">
-              <button
-                type="button"
-                className="absolute top-3 right-2.5 text-white bg-transparent hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                onClick={() => setdisplayExpenseDialog("hidden ")}  
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-              <div className="py-6 px-6 lg:px-8">
-                <h3 className="mb-4 text-xl font-medium text-gray-100 dark:text-white">
-                  Add Expense
-                </h3>
-                <form className="space-y-6" action="#">
-                  <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-300">
-                      Expense
-                    </label>
-                    <input
-                      maxLength={20}
-                      type="text"
-                      name="name"
-                      id="name"
-                      className="bg-gray-900 border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      placeholder="eg: Credit Card"
-                      onChange={(e) => {
-                        setName(e.target.value);
-                      }}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-300">
-                      Categories
-                    </label>
-                    <select
-                      className="text-sm font-medium bg-gray-900 w-30 py-4 br-4 text-white shadow"
-                      onChange={(e) => {
-                        setCategory(e.target.value);
-                      }}
-                      required
-                    >
-                      <option className="w-10 py-2">Loan</option>
-                      <option className="w-10 py-2">Credit Card</option>
-                      <option className="w-10 py-2">Subscribtion</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-300">
-                      Amount
-                    </label>
-                    <input
-                      type="number"
-                      name="amount"
-                      id="password"
-                      defaultValue={0}
-                      placeholder="eg: 700"
-                      className="bg-gray-900 border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      onChange={(e) => {
-                        setAmount(parseInt(e.target.value));
-                      }}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-300">
-                      Date & Time
-                    </label>
-                    <input
-                      type="datetime-local"
-                      name="date"
-                      id="date"
-                      defaultValue={new Date().toISOString()}
-                      placeholder="eg: 700"
-                      className="bg-gray-900 border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      onChange={(e) => {
-                        setDateTime(e.target.value);
-                      }}
-                      required
-                    />
-                  </div>
-                  <button
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(90deg, rgba(30,58,138,1) 0%, rgba(30,64,175,1) 10%, rgba(29,78,216,1) 100%, rgba(37,99,235,1) 100%)",
-                    }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const expense = [...expenses, { title: name, date: dateTime, amount: amount, category: category }];
-                      setExpenses(expense);
-                      setName("");
-                      setAmount(0);
-                      setCategory("");
-                     setdisplayExpenseDialog("hidden ");
-                      
-                    }}
-                    type="submit"
-                    className="w-full text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  >
-                    Add
-                  </button>
-                </form>
+        <div className="relative bg-gray-900 rounded-lg shadow">
+          <button
+            type="button"
+            className="absolute top-3 right-2.5 text-white bg-transparent hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+            onClick={() => setdisplayExpenseDialog("hidden ")}
+          >
+            <svg
+              className="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </button>
+          <div className="py-6 px-6 lg:px-8">
+            <h3 className="mb-4 text-xl font-medium text-gray-100 dark:text-white">
+              Add Expense
+            </h3>
+            <form className="space-y-6" action="#">
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-300">
+                  Expense
+                </label>
+                <input
+                  maxLength={20}
+                  type="text"
+                  name="name"
+                  id="name"
+                  className="bg-gray-900 border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  placeholder="eg: Credit Card"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                  required
+                />
               </div>
-            </div>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-300">
+                  Categories
+                </label>
+                <select
+                  className="text-sm font-medium bg-gray-900 w-30 py-4 br-4 text-white shadow"
+                  onChange={(e) => {
+                    setCategory(e.target.value);
+                  }}
+                  required
+                >
+                  <option className="w-10 py-2" selected>Loan</option>
+                  <option className="w-10 py-2">Credit Card</option>
+                  <option className="w-10 py-2">Subscribtion</option>
+                </select>
+              </div>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-300">
+                  Amount
+                </label>
+                <input
+                  type="number"
+                  name="amount"
+                  id="password"
+                  defaultValue={0}
+                  placeholder="eg: 700"
+                  className="bg-gray-900 border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  onChange={(e) => {
+                    setAmount(parseInt(e.target.value));
+                  }}
+                  required
+                />
+              </div>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-300">
+                  Date & Time
+                </label>
+                <input
+                  type="datetime-local"
+                  name="date"
+                  id="date"
+                  defaultValue={new Date().toISOString()}
+                  placeholder="eg: 700"
+                  className="bg-gray-900 border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  onChange={(e) => {
+                    setDateTime(e.target.value);
+                  }}
+                  required
+                />
+              </div>
+              <button
+                style={{
+                  backgroundImage:
+                    "linear-gradient(90deg, rgba(30,58,138,1) 0%, rgba(30,64,175,1) 10%, rgba(29,78,216,1) 100%, rgba(37,99,235,1) 100%)",
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const expense = [...expenses, { title: name, date: dateTime, amount: amount, category: category }];
+                  setExpenses(expense);
+                  setName("");
+                  setAmount(0);
+                  setCategory("");
+                  setdisplayExpenseDialog("hidden ");
+
+                }}
+                type="submit"
+                className="w-full text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Add
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -476,9 +605,9 @@ function Model() {
 
 function FloatActionButton() {
   const { expenseDialog } = useContext(AppContext);
-  const [ displayExpenseDialog, setdisplayExpenseDialog ] = expenseDialog;
+  const [displayExpenseDialog, setdisplayExpenseDialog] = expenseDialog;
   return (
-    <div onClick={() => setdisplayExpenseDialog(displayExpenseDialog === "hidden " ? "" :"hidden ")} className="w-16 h-16 rounded-full bg-blue-700 flex justify-center items-center shadow-lg shadow-blue-500/50 fixed bottom-10 right-10 cursor-pointer">
+    <div onClick={() => setdisplayExpenseDialog(displayExpenseDialog === "hidden " ? "" : "hidden ")} className="w-16 h-16 rounded-full bg-blue-700 flex justify-center items-center shadow-lg shadow-blue-500/50 fixed bottom-10 right-10 cursor-pointer">
       <FontAwesomeIcon icon={faAdd} color="white" className="" size="1x" />
     </div>
   );
