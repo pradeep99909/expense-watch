@@ -99,7 +99,13 @@ class StackedBArChart extends React.Component<{}, { name: string; data: any }> {
     super(props);
     this.chartReference = React.createRef();
 
-    setTimeout(this.loadChart, 2000);
+    setTimeout(() => {
+      const context: any = this.context;
+      const [expenses] = context.expenseList;
+      if (expenses.length) {
+        this.loadChart();
+      }
+    }, 2000);
   }
 
   loadChart = () => {
@@ -216,15 +222,26 @@ class StackedBArChart extends React.Component<{}, { name: string; data: any }> {
   }
 
   componentDidUpdate() {
-    this.updateChart();
+    const context: any = this.context;
+    const [expenses] = context.expenseList;
+    if (expenses.length && !this.stackedBArChart) {
+      this.loadChart();
+    }
+    else if (expenses.length && this.stackedBArChart) {
+      this.updateChart();
+    }
   }
 
   render() {
-    return (
-      <div className="w-full md:w-1/2 text-slate-50">
-        <canvas ref={this.chartReference} />
-      </div>
-    );
+    const context: any = this.context;
+    const [expenses] = context.expenseList;
+    if (expenses.length) {
+      return (
+        <div className="w-full md:w-1/2 text-slate-50">
+          <canvas ref={this.chartReference} />
+        </div>
+      );
+    }
   }
 }
 
@@ -236,7 +253,13 @@ class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
   constructor(props: any) {
     super(props);
     this.chartReference = React.createRef();
-    setTimeout(this.loadChart, 2000);
+    setTimeout(() => {
+      const context: any = this.context;
+      const [expenses] = context.expenseList;
+      if (expenses.length) {
+        this.loadChart();
+      }
+    }, 2000);
   }
 
   loadChart = () => {
@@ -338,15 +361,26 @@ class DoughNutChart extends React.Component<{}, { name: string; data: any }> {
   }
 
   componentDidUpdate() {
-    this.updateChart()
+    const context: any = this.context;
+    const [expenses] = context.expenseList;
+    if (expenses.length && !this.doughNutChart) {
+      this.loadChart();
+    }
+    else if (expenses.length && this.doughNutChart) {
+      this.updateChart();
+    }
   }
 
   render() {
-    return (
-      <div className="w-full md:w-1/2 text-slate-50">
-        <canvas ref={this.chartReference} />
-      </div>
-    );
+    const context: any = this.context;
+    const [expenses] = context.expenseList;
+    if (expenses.length) {
+      return (
+        <div className="w-full md:w-1/2 text-slate-50">
+          <canvas ref={this.chartReference} />
+        </div>
+      );
+    }
   }
 }
 function ExpenseCalenderList() {
@@ -479,8 +513,9 @@ function Model() {
                     setCategory(e.target.value);
                   }}
                   required
+                  defaultValue="Loan"
                 >
-                  <option className="w-10 py-2" selected>Loan</option>
+                  <option className="w-10 py-2">Loan</option>
                   <option className="w-10 py-2">Credit Card</option>
                   <option className="w-10 py-2">Subscribtion</option>
                 </select>
