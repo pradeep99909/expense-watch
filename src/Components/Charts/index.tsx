@@ -28,7 +28,6 @@ export class StackedBArChart extends React.Component<{}, { name: string; data: a
     constructor(props: any) {
         super(props);
         this.chartReference = React.createRef();
-
         setTimeout(() => {
             const context: any = this.context;
             const [expenses] = context.expenseList;
@@ -123,7 +122,7 @@ export class StackedBArChart extends React.Component<{}, { name: string; data: a
         this.chart = this.chartReference.current.getContext("2d");
         const context: any = this.context;
         const [expenses] = context.expenseList;
-        console.log("componentDidUpdate :: expenses ::", expenses)
+        console.log("StackedBArChart :: componentDidUpdate :: expenses ::", expenses)
         let datasets = [];
         let colorCount = 0;
         for (let i = 0; i < expenses.length; i++) {

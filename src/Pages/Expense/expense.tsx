@@ -9,7 +9,6 @@ import { Chart, registerables } from "chart.js";
 import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import listPlugin from "@fullcalendar/list";
-import colors from "tailwindcss/colors";
 import { AppContext } from "../../Context/provider"
 
 import { StackedBArChart, DoughNutChart } from "../../Components/Charts"
