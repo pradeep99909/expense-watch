@@ -272,7 +272,7 @@ export default class Bills extends React.Component<
 
   render() {
     return (
-      <div>
+      <div className="w-full h-full bg-black p-10">
         <h1 className="text-white text-xl font-bold">
           Bills and Montly Payments
         </h1>
