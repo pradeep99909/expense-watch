@@ -289,7 +289,7 @@ function FloatActionButton() {
 export default class Expense extends React.Component {
   render() {
     return (
-      <div className="w-full bg-slate-500 p-5 overflow-y-auto">
+      <div className="w-full bg-black p-5 overflow-y-auto">
         <UserExpenseBanner />
         <ExpenseTableandCalender />
         <BarChart />

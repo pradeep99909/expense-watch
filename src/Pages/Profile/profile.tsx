@@ -29,7 +29,7 @@ class ProfileViewer extends React.Component {
           src="https://images.unsplash.com/photo-1633332755192-727a05c4013d"
           className="p-2 w-10 h-10 rounded-full"
         ></img>
-        <h3 className="p-2">Fname Lname</h3>
+        <h3 className="p-2 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">Fname Lname</h3>
       </div>
     );
   }
@@ -111,7 +111,7 @@ class Contents extends React.Component {
     return (
       <div
         id="content-viewer"
-        className="pl-2 font-light text-sm justify-self-end mt-auto mb-0 ml-auto mr-auto"
+        className="pl-2 font-light text-sm justify-self-end mt-auto mb-0 ml-auto mr-auto text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex justify-center align-self-end"
       >
         <p>Version 1.0</p>
       </div>
@@ -122,8 +122,8 @@ class Contents extends React.Component {
 export default class Profile extends React.Component {
   render() {
     return (
-      <aside className="w-64 h-full" aria-label="Sidebar">
-        <div className="h-full overflow-y-auto py-4 px-3 bg-gray-50 dark:bg-gray-800">
+      <aside className="w-64 h-full dark" aria-label="Sidebar">
+        <div className="h-full overflow-y-auto py-4 px-3 bg-gray-50 dark:bg-gray-900 flex flex-col">
           <Head />
           <ProfileViewer />
           <Options />
