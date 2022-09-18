@@ -21,11 +21,9 @@ function Settings() {
 class Home extends React.Component {
   render() {
     return (
-      <div
-        className="w-full md:w-5/6 flex p-10 absolute top-0 bg-black"
-        style={{left:"16.666667%"}}
-      >
-        <AppProvider value={{}}>
+      <AppProvider value={{}}>
+        <div className="flex w-full h-full">
+          <Profile />
           <Routes>
             <Route path="/expense" element={<Expense />} />
             <Route path="/profile" element={<Profile1 />} />
@@ -33,8 +31,8 @@ class Home extends React.Component {
             <Route path="/bills" element={<Bills />} />
             <Route path="/settings" element={<Settings />} />
           </Routes>
-        </AppProvider>
-      </div>
+        </div>
+      </AppProvider>
     );
   }
 }
@@ -43,9 +41,17 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div className="App bg-black text-white-0 flex">
-          <Profile />
-          <Home />
+        <div className="App w-full h-full absolute text-white-0 flex">
+          <AppProvider value={{}}>
+            <Profile />
+            <Routes>
+              <Route path="/expense" element={<Expense />} />
+              <Route path="/profile" element={<Profile1 />} />
+              <Route path="/account" element={<Accounts />} />
+              <Route path="/bills" element={<Bills />} />
+              <Route path="/settings" element={<Settings />} />
+            </Routes>
+          </AppProvider>
         </div>
       </Router>
     );
