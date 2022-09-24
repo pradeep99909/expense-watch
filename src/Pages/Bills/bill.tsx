@@ -23,76 +23,6 @@ interface IMyComponentState {
   active: boolean;
 }
 
-function BillsD(props: any) {
-  if (props.bills.length > 0) {
-    return (
-      <div className="container flex justify-center mx-auto mt-5">
-        <div className="flex flex-col">
-          <div className="w-full">
-            <div className="shadow">
-              <table className="">
-                <thead>
-                  <tr>
-                    <th className="text-white text-sm text-left w-20">Name</th>
-                    <th className="text-white text-sm text-left w-20">Type</th>
-                    <th className="text-white text-sm text-left w-20">
-                      Amount
-                    </th>
-                    <th className="text-white text-sm text-left w-20">Edit</th>
-                    <th className="text-white text-sm text-left w-20">
-                      Delete
-                    </th>
-                    <th className="text-white text-sm text-left w-20">
-                      Active
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {props.bills.map((bill: BillModel) => {
-                    return (
-                      <tr className="whitespace-nowrap">
-                        <td className="text-white text-sm text-left py-2">
-                          <div className="text-sm text-white">{bill.name}</div>
-                        </td>
-                        <td className="text-white text-sm text-left py-2">
-                          <div className="text-sm text-white">{bill.type}</div>
-                        </td>
-                        <td className="text-white text-sm text-left py-2 text-sm text-white">
-                          {bill.amount}
-                        </td>
-                        <td className="text-white text-sm text-left py-2">
-                          <FontAwesomeIcon
-                            icon={faEdit}
-                            className="text-slate-50 w-4 h-4 cursor-pointer"
-                          />
-                        </td>
-                        <td className="text-white text-sm text-left py-2">
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            className="text-slate-50 w-4 h-4 cursor-pointer"
-                          />
-                        </td>
-                        <td className="text-white text-sm text-left py-2">
-                          <FontAwesomeIcon
-                            icon={faToggleOn}
-                            className="text-slate-50 w-4 h-4 cursor-pointer"
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  } else {
-    return null;
-  }
-}
-
 const Modal = () => {
   const [display, setDisplay] = useState("hidden ");
   const [bills, setBills] = useState<BillModel[]>([]);
@@ -175,25 +105,6 @@ const Modal = () => {
   );
 };
 
-class UserBills extends React.Component<IMyComponentProps, IMyComponentState> {
-  constructor(props: any) {
-    super(props);
-  }
-  render() {
-    return (
-      <div>
-        {this.props.bills.map((bill: BillModel, index: number) => {
-          return (
-            <div>
-              <p className="text-white">{bill.name}</p>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-}
-
 class BillsDisplay extends React.Component<IMyComponentProps, IMyComponentState> {
   state: Readonly<IMyComponentState>;
   modalRef: any
@@ -204,7 +115,7 @@ class BillsDisplay extends React.Component<IMyComponentProps, IMyComponentState>
       name: "",
       type: "",
       amount: 0,
-      active: false
+      active: true
     }
     this.modalRef = React.createRef();
   }
@@ -441,7 +352,7 @@ class BillsDisplay extends React.Component<IMyComponentProps, IMyComponentState>
             <form action="#" className="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <div className="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                  Edit user
+                  Edit Bill
                 </h3>
                 <button type="button" onClick={() => {
                   this.modalRef.current.style.display = "none"
@@ -453,19 +364,22 @@ class BillsDisplay extends React.Component<IMyComponentProps, IMyComponentState>
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
                     <label htmlFor="first-name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                    <input type="text" name="first-name" id="first-name" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bonnie" required />
+                    <input type="text" name="first-name" value={this.state.name} id="first-name" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bonnie" required />
                   </div>
                   <div className="col-span-6 sm:col-span-3">
                     <label htmlFor="last-name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
-                    <input type="text" name="last-name" id="last-name" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Green" required />
+                    <input type="text" name="last-name" value={this.state.type} id="last-name" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Green" required />
                   </div>
                   <div className="col-span-6 sm:col-span-3">
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount</label>
-                    <input type="number" name="email" id="email" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@company.com" required />
+                    <input type="number" name="email" value={this.state.amount} id="email" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@company.com" required />
                   </div>
                   <div className="col-span-6 sm:col-span-3">
-                    <label htmlFor="phone-number" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
-                    <input type="checkbox" name="phone-number" id="phone-number" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. +(12)3456 789" required />
+                    <label htmlFor="green-toggle" className="inline-flex relative items-center mr-5 cursor-pointer">
+                      <input type="checkbox" value="" id="green-toggle" className="sr-only peer" checked={this.state.active} />
+                      <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                      <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Status</span>
+                    </label>
                   </div>
                 </div>
               </div>
