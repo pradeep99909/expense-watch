@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Profile from "./Pages/Profile/profile";
 import Bills from "./Pages/Bills/bill";
 import Expense from "./Pages/Expense/expense";
+import { Settings, ProfileSettings, NoftificationSettings, DashboardSettings } from "./Pages/Settings/settings";
 import "./App.css";
 import { AppProvider } from "./Context/provider"
 
@@ -12,10 +13,6 @@ function Profile1() {
 
 function Accounts() {
   return <h1 className="text-white text-xl font-bold">Accounts</h1>;
-}
-
-function Settings() {
-  return <h1 className="text-white text-xl font-bold">Settings</h1>;
 }
 
 class Home extends React.Component {
@@ -49,7 +46,11 @@ class App extends React.Component {
               <Route path="/profile" element={<Profile1 />} />
               <Route path="/account" element={<Accounts />} />
               <Route path="/bills" element={<Bills />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route path="settings" element={<Settings />} >
+                <Route path="profile" element={<ProfileSettings />} />
+                <Route path="notification" element={<NoftificationSettings />} />
+                <Route path="dashboard" element={<DashboardSettings />} />
+              </Route>
             </Routes>
           </AppProvider>
         </div>
