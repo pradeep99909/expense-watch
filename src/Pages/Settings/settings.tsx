@@ -48,43 +48,39 @@ function NoftificationSettings() {
                                 <div className="bg-white dark:bg-black py-5">
                                     <div className="grid grid-cols-6 gap-6">
                                         <div className="col-span-6 sm:col-span-3">
-                                            <label htmlFor="small-toggle" className="inline-flex relative items-center mb-5 cursor-pointer">
-                                                <input type="checkbox" value="" id="small-toggle" className="sr-only peer" />
+                                            <label htmlFor="push-notification-toggle" className="inline-flex relative items-center mb-5 cursor-pointer">
+                                                <input type="checkbox" value="" id="push-notification-toggle" className="sr-only peer" />
                                                 <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                                <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Small toggle</span>
+                                                <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Push Notification</span>
                                             </label>
                                         </div>
                                         <div className="col-span-6 sm:col-span-3">
-                                            <label htmlFor="small-toggle" className="inline-flex relative items-center mb-5 cursor-pointer">
-                                                <input type="checkbox" value="" id="small-toggle" className="sr-only peer" />
+                                            <label htmlFor="mail-notification-toggle" className="inline-flex relative items-center mb-5 cursor-pointer">
+                                                <input type="checkbox" value="" id="mail-notification-toggle" className="sr-only peer" />
                                                 <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                                <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Small toggle</span>
+                                                <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Notification on Mail</span>
                                             </label>
                                         </div>
                                         <div className="col-span-6 sm:col-span-3">
-                                            <label htmlFor="small-toggle" className="inline-flex relative items-center mb-5 cursor-pointer">
-                                                <input type="checkbox" value="" id="small-toggle" className="sr-only peer" />
+                                            <label htmlFor="offers-notification-toggle" className="inline-flex relative items-center mb-5 cursor-pointer">
+                                                <input type="checkbox" value="" id="offers-notification-toggle" className="sr-only peer" />
                                                 <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                                <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Small toggle</span>
+                                                <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Notify Offers</span>
                                             </label>
                                         </div>
                                         <div className="col-span-6 sm:col-span-3">
-                                            <label htmlFor="small-toggle" className="inline-flex relative items-center mb-5 cursor-pointer">
-                                                <input type="checkbox" value="" id="small-toggle" className="sr-only peer" />
+                                            <label htmlFor="auto-notification-toggle" className="inline-flex relative items-center mb-5 cursor-pointer">
+                                                <input type="checkbox" value="" id="auto-notification-toggle" className="sr-only peer" />
                                                 <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                                <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Small toggle</span>
+                                                <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Show Auto Bill Notification</span>
                                             </label>
                                         </div>
                                         <div className="col-span-6 sm:col-span-3">
-                                            <label htmlFor="small-toggle" className="inline-flex relative items-center mb-5 cursor-pointer">
-                                                <input type="checkbox" value="" id="small-toggle" className="sr-only peer" />
+                                            <label htmlFor="tips-notification-toggle" className="inline-flex relative items-center mb-5 cursor-pointer">
+                                                <input type="checkbox" value="" id="tips-notification-toggle" className="sr-only peer" />
                                                 <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                                <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Small toggle</span>
+                                                <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Get Tips and Tricks while using the App</span>
                                             </label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input id="link-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                            <label htmlFor="link-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" className="text-blue-600 dark:text-blue-500 hover:underline">terms and conditions</a>.</label>
                                         </div>
                                     </div>
                                 </div>
