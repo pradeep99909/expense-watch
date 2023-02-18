@@ -123,7 +123,7 @@ class Contents extends React.Component {
 export default class Profile extends React.Component {
   render() {
     return (
-      <aside className="w-64 h-full dark" aria-label="Sidebar">
+      <aside className="w-1/6 h-full dark" aria-label="Sidebar">
         <div className="h-full overflow-y-auto py-4 px-3 bg-gray-50 dark:bg-gray-900 flex flex-col">
           <Head />
           <ProfileViewer />

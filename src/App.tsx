@@ -38,7 +38,7 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div className="App w-full h-full absolute text-white-0 flex">
+        <div className="App dark w-full h-full absolute text-white-0 flex">
           <AppProvider value={{}}>
             <Profile />
             <Routes>
