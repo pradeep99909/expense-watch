@@ -420,7 +420,7 @@ export default class Bills extends React.Component<
 
   render() {
     return (
-      <div className="w-full h-full bg-black p-10">
+      <div className="w-5/6 h-full bg-black p-10">
         <h1 className="text-white text-xl font-bold">
           Bills and Montly Payments
         </h1>
