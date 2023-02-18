@@ -179,7 +179,7 @@ class SettingsTab extends React.Component {
 class Settings extends React.Component {
     render() {
         return (
-            <main className="w-full h-full bg-black p-10 overflow-y-auto">
+            <main className="w-5/6 h-full bg-black p-10 overflow-y-auto">
                 <h1 className="text-white text-xl font-bold">
                     Settings
                 </h1>
