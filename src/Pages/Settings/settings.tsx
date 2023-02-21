@@ -1,12 +1,47 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 
+function GeneralSettings() {
+    return (
+        <section>
+            <div className="max-w-2xl py-4 lg:py-16">
+                <form action="#">
+                    <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
+                        <div className="w-full">
+                            <label htmlFor="select-currency" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Currency</label>
+                            <select name="select-currency" className="tbg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option>USD</option>
+                                <option>INR</option>
+                                <option>EUR</option>
+                                <option>IDR</option>
+                                <option>JPY</option>
+                                <option>KES</option>
+                                <option>LBP</option>
+                                <option>LYD</option>
+                                <option>MGA</option>
+                                <option>MUR</option>
+                                <option>MXN</option>
+                                <option>MNT</option>
+                                <option>PLN</option>
+                                <option>QAR</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                        <button type="submit" className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        );
+}
 
 function ProfileSettings() {
     return (
-        <section className="dark dark:bg-gray-900">
-            <div className="max-w-2xl px-4 py-8 lg:py-16">
-                <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Update Profile</h2>
+        <section>
+            <div className="max-w-2xl py-4 lg:py-16">
                 <form action="#">
                     <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                         <div className="w-full">
@@ -159,6 +194,9 @@ class SettingsTab extends React.Component {
             <div className="text-sm font-medium text-center text-gray-500 border-gray-200 dark:text-gray-400 dark:border-gray-700">
                 <ul className="flex flex-wrap -mb-px">
                     <li className="mr-2">
+                        <Link to="general" className="inline-block pt-4 pr-4 rounded-t-lg border-transparent hover:text-gray-200 dark:hover:text-white-100 focus:active:text-blue-500 font-bold">General</Link>
+                    </li>
+                    <li className="mr-2">
                         <Link to="profile" className="inline-block pt-4 pr-4 rounded-t-lg border-transparent hover:text-gray-200 dark:hover:text-white-100 focus:active:text-blue-500 font-bold">Profile</Link>
                     </li>
                     <li className="mr-2 dark">
@@ -191,5 +229,5 @@ class Settings extends React.Component {
 }
 
 export {
-    DashboardSettings, NoftificationSettings, ProfileSettings, Settings
+    GeneralSettings, DashboardSettings, NoftificationSettings, ProfileSettings, Settings
 }

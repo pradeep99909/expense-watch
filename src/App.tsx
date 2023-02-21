@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Profile from "./Pages/Profile/profile";
 import Bills from "./Pages/Bills/bill";
 import Expense from "./Pages/Expense/expense";
-import { Settings, ProfileSettings, NoftificationSettings, DashboardSettings } from "./Pages/Settings/settings";
+import { Settings, ProfileSettings, NoftificationSettings, DashboardSettings, GeneralSettings } from "./Pages/Settings/settings";
 import "./App.css";
 import { AppProvider } from "./Context/provider"
 
@@ -50,6 +50,7 @@ class App extends React.Component {
                 <Route path="profile" element={<ProfileSettings />} />
                 <Route path="notification" element={<NoftificationSettings />} />
                 <Route path="dashboard" element={<DashboardSettings />} />
+                <Route path="general" element={<GeneralSettings />} />
               </Route>
             </Routes>
           </AppProvider>
