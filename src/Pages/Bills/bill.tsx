@@ -1,13 +1,7 @@
 import React, { useState, useContext, createContext } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BillModel from "./interface";
 import DB from "../../LocalDB/db";
-import {
-  faAdd,
-  faEdit,
-  faTrash,
-  faToggleOn,
-} from "@fortawesome/free-solid-svg-icons";
+import { DataTableDemo } from "./table";
 
 const Database = new DB();
 
@@ -43,7 +37,7 @@ const Modal = () => {
         className="block text-white  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-5"
         type="button"
       >
-        <FontAwesomeIcon icon={faAdd} />
+        {/* <FontAwesomeIcon icon={faAdd} /> */}
         &nbsp; Add
       </button>
       <div id="editUserModal" tabIndex={2} aria-hidden="true" className={display +
@@ -420,13 +414,14 @@ export default class Bills extends React.Component<
 
   render() {
     return (
-      <div className="w-5/6 h-full bg-black p-10">
-        <h1 className="text-white text-xl font-bold">
+      <div className="w-5/6 h-full bg-background p-10">
+        {/* <h2 className="text-xl font-bold">
           Bills and Montly Payments
-        </h1>
+        </h2> */}
         {/* <UserBills bills={this.state.bills} /> */}
-        <Modal />
+        {/* <Modal /> */}
         {/* <BillsDisplay bills={this.state.bills} /> */}
+        <DataTableDemo />
       </div>
     );
   }

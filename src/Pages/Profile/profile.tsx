@@ -1,20 +1,66 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../../@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "../../@/components/ui/avatar"
+import { Button } from "../../@/components/ui/button"
+import { Banknote, Settings, Receipt, User } from "lucide-react"
+import { Check, ChevronsUpDown } from "lucide-react"
+ 
+import { cn } from "../../@/lib/utils"
 import {
-  faUser,
-  faMoneyBill,
-  faAddressBook,
-  faGear,
-  faTable,
-} from "@fortawesome/free-solid-svg-icons";
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "../../@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../@/components/ui/popover"
+
+const frameworks = [
+  {
+    value: "next.js",
+    label: "Next.js",
+  },
+  {
+    value: "sveltekit",
+    label: "SvelteKit",
+  },
+  {
+    value: "nuxt.js",
+    label: "Nuxt.js",
+  },
+  {
+    value: "remix",
+    label: "Remix",
+  },
+  {
+    value: "astro",
+    label: "Astro",
+  },
+]
+ 
+export function ComboboxDemo() {
+  const [open, setOpen] = React.useState(false)
+ 
+  return (
+    <div className="px-3 py-2">
+      <Avatar className="h-6 w-6">
+        <AvatarImage src="https://github.com/shadcn.png" />
+        <AvatarFallback>CN</AvatarFallback>
+      </Avatar>
+    </div>
+  )
+}
 
 class Head extends React.Component {
   render() {
     return (
       <Link to="/expense" className="flex items-center pl-2.5 mb-5">
-        <img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-7" alt="Flowbite Logo" />
-        <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Expense Watch</span>
+        <h3>Expense Watch</h3>
       </Link>
     )
   }
@@ -23,14 +69,20 @@ class Head extends React.Component {
 class ProfileViewer extends React.Component {
   render() {
     return (
-      <div id="profile-viewer" className="flex flex-col">
-        <img
-          alt="profile"
-          src="https://images.unsplash.com/photo-1633332755192-727a05c4013d"
-          className="p-2 w-10 h-10 rounded-full"
-        ></img>
-        <h3 className="p-2 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">Fname Lname</h3>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          </CardTitle>
+          <CardDescription>
+            Card Description
+          </CardDescription>
+        </CardHeader>
+      </Card>
+      
     );
   }
 }
@@ -38,97 +90,53 @@ class ProfileViewer extends React.Component {
 class Options extends React.Component {
   render() {
     return (
-      <ul className="space-y-2">
-        <li>
-          <Link to="/expense" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-            <svg aria-hidden="true" className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
-            <span className="ml-3">Expense</span>
-          </Link>
-        </li>
-        {/* <li>
-          <button type="button" className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-            <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clipRule="evenodd"></path></svg>
-            <span className="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="">E-commerce</span>
-            <svg sidebar-toggle-item="" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-          </button>
-          <ul id="dropdown-example" className="hidden py-2 space-y-2">
-            <li>
-              <a href="#" className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Products</a>
-            </li>
-            <li>
-              <a href="#" className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Billing</a>
-            </li>
-            <li>
-              <a href="#" className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Invoice</a>
-            </li>
-          </ul>
-        </li> */}
-        <li>
-          <Link to="/accounts" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-            <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-            <span className="flex-1 ml-3 whitespace-nowrap">Accounts</span>
-            <span className="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">Pro</span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/bills" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-            <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path></svg>
-            <span className="flex-1 ml-3 whitespace-nowrap">Monthly Pay</span>
-            <span className="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">3</span>
-          </Link>
-        </li>
-        <li>
-          <Link to="/settings" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-            {/* <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg> */}
-            <FontAwesomeIcon icon={faGear} className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-            <span className="flex-1 ml-3 whitespace-nowrap">Settings</span>
-          </Link>
-        </li>
-        {/* <li>
-          <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-            <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clipRule="evenodd"></path></svg>
-            <span className="flex-1 ml-3 whitespace-nowrap">Products</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-            <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd"></path></svg>
-            <span className="flex-1 ml-3 whitespace-nowrap">Sign In</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-            <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clipRule="evenodd"></path></svg>
-            <span className="flex-1 ml-3 whitespace-nowrap">Sign Up</span>
-          </a>
-        </li> */}
-      </ul>
-    );
-  }
-}
-
-class Contents extends React.Component {
-  render() {
-    return (
-      <div
-        id="content-viewer"
-        className="pl-2 font-light text-sm justify-self-end mt-auto mb-0 ml-auto mr-auto text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex justify-center align-self-end"
-      >
-        <p>Version 1.0</p>
-      </div>
-    );
+          <div>
+            <div className="space-y-4 py-4 text-primary">
+              <div className="px-3 py-2">
+                <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
+                  Discover
+                </h2>
+                <div className="space-y-1">
+                  <Button variant="ghost" className="w-full justify-start">
+                    <Link to="/expense" className="flex items-center">
+                      <Banknote className="mr-2 h-4 w-4" />
+                      Expense
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start">
+                    <Link to="/accounts" className="flex items-center">
+                      <User className="mr-2 h-4 w-4" />
+                      Accounts
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start">
+                    <Link to="/bills" className="flex items-center">
+                      <Receipt className="mr-2 h-4 w-4" />
+                      Bills
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start text-white">
+                    <Link to="/settings" className="flex items-center">
+                      <Settings className="mr-2 h-4 w-4" />
+                      Settings
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+    )
   }
 }
 
 export default class Profile extends React.Component {
   render() {
     return (
-      <aside className="w-1/6 h-full dark" aria-label="Sidebar">
-        <div className="h-full overflow-y-auto py-4 px-3 bg-gray-50 dark:bg-gray-900 flex flex-col">
+      <aside className="w-1/6 h-full bg-background" aria-label="Sidebar">
+        <div className="h-full flex flex-col">
           <Head />
-          <ProfileViewer />
+          <ComboboxDemo />
           <Options />
-          <Contents />
         </div>
       </aside>
     );

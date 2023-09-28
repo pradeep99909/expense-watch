@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChartPie,
-  faChartBar,
-  faAdd,
-} from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faChartPie,
+//   faChartBar,
+//   faAdd,
+// } from "@fortawesome/free-solid-svg-icons";
 import { Chart, registerables } from "chart.js";
-import FullCalendar from "@fullcalendar/react"; // must go before plugins
-import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
-import listPlugin from "@fullcalendar/list";
+// import FullCalendar from "@fullcalendar/react"; // must go before plugins
+// import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
+// import listPlugin from "@fullcalendar/list";
 import { AppContext } from "../../Context/provider"
 
 import { StackedBArChart, DoughNutChart } from "../../Components/Charts"
@@ -32,12 +32,12 @@ class UserExpenseBanner extends React.Component {
       >
         <span className="flex items-center">
           <span>
-            <FontAwesomeIcon
+            {/* <FontAwesomeIcon
               icon={faChartPie}
               color="white"
               className=""
               size="2x"
-            />
+            /> */}
           </span>
           <span className="ml-4">
             <p className="text-slate-400 font-bold text-xs">TOTAL EXPENSE</p>
@@ -46,12 +46,12 @@ class UserExpenseBanner extends React.Component {
         </span>
         <span className="flex items-center">
           <span>
-            <FontAwesomeIcon
+            {/* <FontAwesomeIcon
               icon={faChartBar}
               color="white"
               className=""
               size="2x"
-            />
+            /> */}
           </span>
           <span className="ml-4">
             <p className="text-slate-400 font-bold text-xs">INCOME</p>
@@ -60,12 +60,12 @@ class UserExpenseBanner extends React.Component {
         </span>
         <span className="flex items-center">
           <span>
-            <FontAwesomeIcon
+            {/* <FontAwesomeIcon
               icon={faChartPie}
               color="white"
               className=""
               size="2x"
-            />
+            /> */}
           </span>
           <span className="ml-4">
             <p className="text-slate-900 font-bold text-xs">TOTAL EXPENSE</p>
@@ -83,11 +83,11 @@ function ExpenseCalenderList() {
   //render(){
   return (
     <div className="mt-4 mb-3 w-1/2 pr-2">
-      <FullCalendar
+      {/* <FullCalendar
         events={expenses}
         plugins={[listPlugin]}
         initialView="listMonth"
-      />
+      /> */}
     </div>
   );
   //}
@@ -98,11 +98,11 @@ function ExpenseCalender() {
   const [expenses, setExpenses] = expenseList;
   return (
     <div className="mt-4 -mb-3 w-1/2 pl-2">
-      <FullCalendar
+      {/* <FullCalendar
         events={expenses}
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
-      />
+      /> */}
     </div>
   );
 }
@@ -281,7 +281,7 @@ function FloatActionButton() {
   const [displayExpenseDialog, setdisplayExpenseDialog] = expenseDialog;
   return (
     <div onClick={() => setdisplayExpenseDialog(displayExpenseDialog === "hidden " ? "" : "hidden ")} className="w-16 h-16 rounded-full bg-blue-700 flex justify-center items-center shadow-lg shadow-blue-500/50 fixed bottom-10 right-10 cursor-pointer">
-      <FontAwesomeIcon icon={faAdd} color="white" className="" size="1x" />
+      {/* <FontAwesomeIcon icon={faAdd} color="white" className="" size="1x" /> */}
     </div>
   );
 }
